@@ -3,17 +3,11 @@ package com.example.sinhaguild.project23;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 
-import su.levenetc.android.textsurface.Debug;
 import su.levenetc.android.textsurface.TextSurface;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void show() {
         textSurface.reset();
-        String toTalk = "Mary had a little lamb and its hair was white as snow.";
-        CookieThumperSample ck = new CookieThumperSample(this);
+        String toTalk = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+        ResponseActivity ck = new ResponseActivity(this);
         ck.play(textSurface, getAssets(), toTalk );
     }
 

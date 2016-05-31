@@ -1,20 +1,36 @@
 <com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
-    android:id="@+id/id_drawerlayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false">
     <!--content-->
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="#000000"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <su.levenetc.android.textsurface.TextSurface
-        android:id="@+id/text_surface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    </FrameLayout>
+        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/frame_textsurface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000">
+
+            <su.levenetc.android.textsurface.TextSurface
+                android:id="@+id/text_surface"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frame_textsurface"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bear" />
+
+    </RelativeLayout>
+
 
     <!--menu-->
     <RelativeLayout

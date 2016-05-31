@@ -35,4 +35,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.elevenetc:textsurface:0.9.1'
+    compile 'com.github.dexafree:materiallist-cards:2.0.7'
+    compile 'com.github.dexafree:materiallist:3.2.1'
 }

@@ -7,8 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.Log;
 
+import com.example.sinhaguild.project23.data.TextSurfaceConfig;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -31,32 +32,24 @@ import su.levenetc.android.textsurface.contants.Direction;
 import su.levenetc.android.textsurface.contants.Pivot;
 import su.levenetc.android.textsurface.contants.Side;
 
-/**
- * Created by Eugene Levenetc.
- */
-public class CookieThumperSample {
+public class ResponseActivity {
 
     //fixed options
-    public static final String TAG = "CookieThumperSample";
-    public static final List<Integer> sizes = Arrays.asList(30, 40, 50, 60);
-    public static final List<Integer> colors = Arrays.asList(Color.RED, Color.WHITE, Color.YELLOW, Color.MAGENTA, Color.BLUE);
-    public static final List<Integer> position = Arrays.asList(Align.BOTTOM_OF, Align.RIGHT_OF);
-    public static final List<String> animations = Arrays.asList("Shape", "Shape2", "Rotate", "SlideLeft", "SlideTop", "Circle");
-
-    public String example = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
-    //list for words and Text objects for animations
+    public static final String TAG = "ResponseActivity";
+    //list for words and Text objects for ANIMATIONS
     public ArrayList<String> wordArrayList = new ArrayList<>();
     public List<Text> textObjects = new ArrayList<>();
-
     public Random randomizer = new Random();
+    public String example;
     Context context;
+    //"Lorem Ipsum is simply dummy text of the printing and typesetting industry";
 
 
-    public CookieThumperSample(Context context) {
+    public ResponseActivity(Context context) {
         this.context = context;
     }
 
-    public CookieThumperSample(Context context, String toTalk) {
+    public ResponseActivity(Context context, String toTalk) {
         this.context = context;
         this.example = toTalk;
     }
@@ -90,35 +83,35 @@ public class CookieThumperSample {
 
         for (int i = 0; i < wordArrayList.size(); i++) {
             Paint tempPaint;
-            if ((i % 2) == 0 && i != 0) {
-                tempPaint = paint;
-                Text temp = TextBuilder.
-                        create(wordArrayList.get(i)).
-                        setPaint(tempPaint).
-                        setSize(sizes.get(randomizer.nextInt(sizes.size()))).
-                        setAlpha(0).
-                        setColor(colors.get(randomizer.nextInt(colors.size()))).
-                        setPosition(position.get(randomizer.nextInt(position.size())), textObjects.get(i - 1)).build();
-                textObjects.add(temp);
-            } else if (i == 0) {
+            if (i == 0) {
                 tempPaint = paintCover;
                 Text temp = TextBuilder.
                         create(wordArrayList.get(i)).
                         setPaint(tempPaint).
-                        setSize(sizes.get(randomizer.nextInt(sizes.size()))).
+                        setSize(TextSurfaceConfig.TEXT_SIZES.get(randomizer.nextInt(TextSurfaceConfig.TEXT_SIZES.size()))).
                         setAlpha(0).
-                        setColor(colors.get(randomizer.nextInt(colors.size()))).
+                        setColor(TextSurfaceConfig.TEXT_COLORS.get(randomizer.nextInt(TextSurfaceConfig.TEXT_COLORS.size()))).
                         setPosition(Align.SURFACE_CENTER).build();
+                textObjects.add(temp);
+            } else if ((i % 2) == 0) {
+                tempPaint = paint;
+                Text temp = TextBuilder.
+                        create(wordArrayList.get(i)).
+                        setPaint(tempPaint).
+                        setSize(TextSurfaceConfig.TEXT_SIZES.get(randomizer.nextInt(TextSurfaceConfig.TEXT_SIZES.size()))).
+                        setAlpha(0).
+                        setColor(TextSurfaceConfig.TEXT_COLORS.get(randomizer.nextInt(TextSurfaceConfig.TEXT_COLORS.size()))).
+                        setPosition(TextSurfaceConfig.TEXT_POSITION.get(randomizer.nextInt(TextSurfaceConfig.TEXT_POSITION.size())), textObjects.get(i - 1)).build();
                 textObjects.add(temp);
             } else {
                 tempPaint = paintGabrielle;
                 Text temp = TextBuilder
                         .create(wordArrayList.get(i))
                         .setPaint(tempPaint).
-                                setSize(sizes.get(randomizer.nextInt(sizes.size()))).
+                                setSize(TextSurfaceConfig.TEXT_SIZES.get(randomizer.nextInt(TextSurfaceConfig.TEXT_SIZES.size()))).
                                 setAlpha(0).
-                                setColor(colors.get(randomizer.nextInt(colors.size()))).
-                                setPosition(position.get(randomizer.nextInt(position.size())), textObjects.get(i - 1)).build();
+                                setColor(TextSurfaceConfig.TEXT_COLORS.get(randomizer.nextInt(TextSurfaceConfig.TEXT_COLORS.size()))).
+                                setPosition(TextSurfaceConfig.TEXT_POSITION.get(randomizer.nextInt(TextSurfaceConfig.TEXT_POSITION.size())), textObjects.get(i - 1)).build();
                 textObjects.add(temp);
             }
         }
@@ -132,55 +125,63 @@ public class CookieThumperSample {
         List<AnimationsSet> anim = new ArrayList<>();
 
         for (int i = 0; i < textList.size(); i++) {
-            String temp = animations.get(randomizer.nextInt(animations.size()));
+            String temp = TextSurfaceConfig.ANIMATIONS.get(randomizer.nextInt(TextSurfaceConfig.ANIMATIONS.size()));
 
             switch (temp) {
                 case "Shape":
-                    Sequential seq = new Sequential(
+                    Sequential shape = new Sequential(
                             ShapeReveal.create(textList.get(i), 750, SideCut.show(Side.LEFT), false),
                             Delay.duration(500));
-                    anim.add(seq);
-                    Log.v(TAG, "Shape Triggered for "+textList.get(i).toString());
+                    anim.add(shape);
+                    Log.v(TAG, "Shape Triggered for " + textList.get(i).toString());
                     break;
                 case "Rotate":
-                    Parallel pl = new Parallel(
+                    Parallel rot = new Parallel(
                             TransSurface.toCenter(textList.get(i), 500),
                             Rotate3D.showFromSide(textList.get(i), 750, Pivot.TOP),
                             Delay.duration(500));
-                    Log.v(TAG, "Rotate Triggered for "+textList.get(i).toString());
-                    anim.add(pl);
+                    Log.v(TAG, "Rotate Triggered for " + textList.get(i).toString());
+                    anim.add(rot);
+                    break;
+                case "Rotate_clock":
+                    Parallel clock = new Parallel(
+                            TransSurface.toCenter(textList.get(i), 500),
+                            Rotate3D.showFromCenter(textList.get(i), 750, Direction.CLOCK, Pivot.TOP),
+                            Delay.duration(500));
+                    Log.v(TAG, "Rotate Triggered for " + textList.get(i).toString());
+                    anim.add(clock);
                     break;
                 case "SlideLeft":
-                    Parallel pl2 = new Parallel(
+                    Parallel left = new Parallel(
                             new TransSurface(750, textList.get(i), Pivot.CENTER),
                             Slide.showFrom(Side.LEFT, textList.get(i), 750),
                             ChangeColor.to(textList.get(i), 750, Color.WHITE),
                             Delay.duration(500));
-                    Log.v(TAG, "SlideLeft Triggered for "+textList.get(i).toString());
-                    anim.add(pl2);
+                    Log.v(TAG, "SlideLeft Triggered for " + textList.get(i).toString());
+                    anim.add(left);
                     break;
                 case "Circle":
-                    Sequential seq2 = new Sequential(
+                    Sequential circle = new Sequential(
                             ShapeReveal.create(textList.get(i), 500, Circle.show(Side.CENTER, Direction.OUT), false),
                             Delay.duration(500));
-                    Log.v(TAG, "Circle Triggered for "+textList.get(i).toString());
-                    anim.add(seq2);
+                    Log.v(TAG, "Circle Triggered for " + textList.get(i).toString());
+                    anim.add(circle);
                     break;
                 case "SlideTop":
-                    Parallel pl3 = new Parallel(
+                    Parallel top = new Parallel(
                             TransSurface.toCenter(textList.get(i), 500),
                             Slide.showFrom(Side.TOP, textList.get(i), 500),
                             Delay.duration(500));
-                    Log.v(TAG, "SlideTop Triggered for "+textList.get(i).toString());
-                    anim.add(pl3);
+                    Log.v(TAG, "SlideTop Triggered for " + textList.get(i).toString());
+                    anim.add(top);
                     break;
-                case "Shape2":
-                    Parallel pl4 = new Parallel(
+                case "Shape_long":
+                    Parallel cut = new Parallel(
                             new TransSurface(500, textList.get(i), Pivot.CENTER),
                             ShapeReveal.create(textList.get(i), 1300, SideCut.show(Side.LEFT), false),
                             Delay.duration(500));
-                    Log.v(TAG, "Shape2 Triggered for "+textList.get(i).toString());
-                    anim.add(pl4);
+                    Log.v(TAG, "Shape2 Triggered for " + textList.get(i).toString());
+                    anim.add(cut);
                     break;
             }
         }
@@ -189,12 +190,14 @@ public class CookieThumperSample {
          * Generic signature is surface.play(new Sequential(AnimationsSet Object))
          * I will pass a list here built dynamically
          */
+
         surface.play(new Sequential(anim.toArray(new AnimationsSet[anim.size()])));
 
     }
 
     /**
      * Build array of words from supplied string
+     *
      * @param sentence
      */
     public void buildWordsArray(String sentence) {
